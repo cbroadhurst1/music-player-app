@@ -23,10 +23,19 @@ function mouseClicked() {
     else if(page == "home" && mouseX >= 500 && mouseX<= 580 && mouseY >= 300 && mouseY <= 380) {
           page = "page3"
         }
+    else if(page == "page1" && mouseX >= 10 && mouseX<= 70 && mouseY >= 10 && mouseY <= 40) {
+          page = "home"
+        }
     }
 
    function page1(){
         background(255,0,0);
+        fill(200);
+        rect(10,10,60,30);
+        fill(0);
+        textStyle(BOLD);
+        text("<  HOME", 12, 30);
+        
 }
 
    function page2(){
