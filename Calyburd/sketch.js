@@ -12,6 +12,16 @@ function preload() {
      image(img, 500, 300, 80, 80); 
 }
 
+function artist_page(){
+    background(255,0,0);
+    fill(200);
+    rect(10,10,60,30,10);
+    fill(0);
+    textStyle(BOLD);
+    text("<  HOME", 12, 30);
+        
+}
+
 
 function mouseClicked() {
     if(page == "home" && mouseX >= 300 && mouseX<= 380 && mouseY >= 300 && mouseY <= 380) {
@@ -23,28 +33,12 @@ function mouseClicked() {
     else if(page == "home" && mouseX >= 500 && mouseX<= 580 && mouseY >= 300 && mouseY <= 380) {
           page = "page3"
         }
-    else if(page == "page1" && mouseX >= 10 && mouseX<= 70 && mouseY >= 10 && mouseY <= 40) {
+    else if(page != "home" && mouseX >= 10 && mouseX<= 70 && mouseY >= 10 && mouseY <= 40) {
           page = "home"
         }
     }
 
-   function page1(){
-        background(255,0,0);
-        fill(200);
-        rect(10,10,60,30);
-        fill(0);
-        textStyle(BOLD);
-        text("<  HOME", 12, 30);
-        
-}
 
-   function page2(){
-        background(0,255,0);
-}
-
-   function page3(){
-        background(0,0,255);
-}
 
 function setup() {
   createCanvas(1024,720);
@@ -54,12 +48,8 @@ function setup() {
  function draw() {
   if(page == "home") {
       home();
-  } else if (page == "page1") {
-      page1();
-  } else if (page == "page2") {
-      page2();
-  } else if (page == "page3") {
-      page3();
+  } else if (page == "page1" || page == "page2" || page == "page3") {
+      artist_page();
   } 
 
 }
