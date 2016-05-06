@@ -11,6 +11,8 @@ var art;
 var playback;
 
 
+var testa
+
 var volumeLevel;
 
 var volumeToggle = 130;
@@ -18,7 +20,7 @@ var volumeToggle = 130;
 
 
 // function used to create buttons with song titles on the right hand side of the artist pages to allow the user to select a song
-function songButton(y, songTitle){
+function songButton(y, songTitle) {
     fill(0, 0, 255, 80);
     rect(width-160, y, 130, 40, 10); 
     fill(255);
@@ -26,6 +28,8 @@ function songButton(y, songTitle){
     textSize(14);
     text(songTitle, width-95, y+25);
 }
+
+
 
 
 // preload function to load image and sound files to the application
@@ -79,13 +83,37 @@ function setup() {
 
 // setup the application's window size
     createCanvas(1280,720);
+    analyzer = new p5.Amplitude();
+    analyzer.setInput(sound);
+    fft = new p5.FFT();
+    fft.setInput(sound);
 }
+
+
+function visualiser(){
+    
+    
+    testa = analyzer.getLevel();
+    testb = fft.analyze();
+    fill(testa*255, 0, testa*255)
+    //ellipse(500,500,testb.length,50);
+    fill(255, 255-(testa*255), 255)
+    rect(280, 150, 790, 450, 80);
+}
+
 
 // function which runs when the user is on the home page
 function home(){
     
 // background colour of the home page
      background('#44A3C1');
+     fill(245);
+     textSize(90);
+     textAlign(CENTER);
+     textFont("Arial");
+     text("Select an artist:", 640, 210);
+    
+     
     
 // Art for each artist loaded on the homepage, each image will function as a button to load the page for each respective artist.
      image(bensoundImage, 130, 270, 390, 180);
@@ -117,12 +145,15 @@ function artist_page(){
     
 // if statement for the play/pause button to display as a pause button while a song is playing and to display as a play button while it is not playing
     if (sound.isPlaying()){
+    fill("#285277");
     rect(85, 405, 8, 30);
     rect(97, 405, 8, 30);
     playback = "playing";
+    visualiser();
     }
     
     else {
+    fill("#51BB3E");
     triangle(80, 400, 110, 420, 80, 440);
     playback = "paused";
     }
@@ -130,18 +161,26 @@ function artist_page(){
 // code to produce the stop button to stop music from playing 
     fill(230);
     rect(135, 390, 60, 60);
-    rect(145, 400, 40, 40);
+    fill("#B03B3D");
+    rect(148, 403, 34, 34);
     
 // code to load song art on the artist page depending on which song has been selected
     image(art, 30, 150, 200, 200);
     
+// volume control slider
     line(30, 370, 230, 370);
+    fill("#BEC44F");
     ellipse(volumeToggle, 370, 10, 10);
     if(mouseIsPressed && mouseX >= 30 && mouseX <= 230 && mouseY >= 365 && mouseY <= 375){
     volumeToggle = mouseX
     }
     volumeLevel = map(volumeToggle, 30, 230, 0, 1);
-    sound.amp(volumeLevel);
+    sound.setVolume(volumeLevel);
+    
+    
+    
+    
+    
     
 // if statements to load the song selection buttons depending on which artist page is loaded.  The previously created songButton function is used.
 // The if statements are also used to load artist specific elements for each artist page such as page title text and licensing information.
@@ -299,6 +338,7 @@ function draw() {
       home();
   } else {
       artist_page();
+      
       
   } 
   
