@@ -13,11 +13,11 @@ var playback;
 // variable which will store the amplitude value of the music currently playing
 var soundAmp;
 
-//variable 
+// variable to store the current volume/amplitude of the sound
 var volumeLevel;
 
+// variable used to record the placement of the volume slider
 var volumeToggle = 130;
-
 
 
 // function used to create buttons with song titles on the right hand side of the artist pages to allow the user to select a song
@@ -29,8 +29,6 @@ function songButton(y, songTitle) {
     textSize(14);
     text(songTitle, width-95, y+25);
 }
-
-
 
 
 // preload function to load image and sound files to the application
@@ -76,8 +74,8 @@ function preload() {
 // preload of music track "Angevin" by Incompetech and accompanying image
     angevinMusic = loadSound("Music/Angevin.mp3");
     angevinImage = loadImage("Album Art/angevin.jpg");
-
 }
+
 
 // setup function to load the inital application code
 function setup() {
@@ -85,20 +83,28 @@ function setup() {
 // setup the application's window size
     createCanvas(1280,720);
     
-
+// variable "analyzer" used to hold the value of the current amplitude of the playing music
     analyzer = new p5.Amplitude();
     analyzer.setInput(sound);
 }
 
 
+// function which holds the code for a visualiser which runs while music is playing within the app
 function visualiser(){    
-    testa = analyzer.getLevel();
-    fill(255, 255-(testa*255), 255)
+    
+    // variable which holds the value of the current amplitude, obtaining it from the analyzer variable
+    var currentAmp = analyzer.getLevel();
+    
+    // main visualiser shape which colur changes depending on the current volume/amplitude
+    fill(255, 255-(currentAmp*255), 255)
     rect(280, 150, 790, 450, 80);
-    ellipse(675, 375, testa*100, testa*100);
-    ellipse(675, 375, testa*200, testa*200);
-    ellipse(675, 375, testa*400, testa*400);
-    //ellipse(675, 375, testa*800, testa*800);
+    
+    // cicles which appear in the visualiser which change their size depending on the current volume/amplitude
+    strokeWeight(2.5);
+    ellipse(675, 375, currentAmp*800, currentAmp*800);
+    ellipse(675, 375, currentAmp*400, currentAmp*400);
+    ellipse(675, 375, currentAmp*200, currentAmp*200);
+    ellipse(675, 375, currentAmp*100, currentAmp*100);
 }
 
 
@@ -110,12 +116,14 @@ function home(){
     
 // text advising user to select an artist
      fill(245);
-     textSize(90);
+     textSize(70);
      textAlign(CENTER);
-     text("Select an artist:", 640, 210);
-    
-     
-    
+     text("Select an artist", 640, 240);
+     fill('#285F77');
+     textStyle(BOLD);
+     textSize(100);
+     text("Calyburd Music", 640, 110);
+        
 // Art for each artist loaded on the homepage, each image will function as a button to load the page for each respective artist.
      image(bensoundImage, 130, 270, 390, 180);
      image(purpleplanetImage, 570, 270, 180, 180);
@@ -123,16 +131,15 @@ function home(){
 }
 
 // function which runs when the user is on one the artists' pages.  
-// The page variable defined before will be used to determine which sections of the function will run
-// depending on which page the user has selected to load.
+// The page variable defined before will be used to determine which sections of the function will run depending on which page the user has selected to load.
 function artist_page(){
     
 // background colour of the artist pages
     background('#44A3C1');
     
-//sound.amp(volume);
 // code to produce a button labelled "home".  When clicked on, the application will load the home page
     fill(200);
+    strokeWeight(1.5);
     rect(10, 10, 80, 30, 10);
     fill(0);
     textStyle(BOLD);
@@ -140,7 +147,6 @@ function artist_page(){
     textSize(14);
     text("<  HOME", 50, 30);
 
-  
 // code to produce the play/pause button.  The button will display as a pause button while music is playing and will display as a play button otherwise
     fill(230);
     rect(65, 390, 60, 60);
@@ -148,6 +154,7 @@ function artist_page(){
 // if statement for the play/pause button to display as a pause button while a song is playing and to display as a play button while it is not playing
     if (sound.isPlaying()){
     fill("#285277");
+    
     rect(85, 405, 8, 30);
     rect(97, 405, 8, 30);
     playback = "playing";
@@ -165,6 +172,7 @@ function artist_page(){
     }
     
 // code to produce the stop button to stop music from playing 
+    strokeWeight(1.5);
     fill(230);
     rect(135, 390, 60, 60);
     fill("#B03B3D");
@@ -173,6 +181,17 @@ function artist_page(){
 // code to load song art on the artist page depending on which song has been selected
     image(art, 30, 150, 200, 200);
     
+// volume control symbol
+    beginShape();
+    fill(230);
+    vertex(10, 365);
+    vertex(15, 365);
+    vertex(20, 360);
+    vertex(20, 380);
+    vertex(15, 375);
+    vertex(10, 375);
+    endShape(CLOSE);
+    
 // volume control slider
     line(30, 370, 230, 370);
     fill("#BEC44F");
@@ -180,11 +199,12 @@ function artist_page(){
     if(mouseIsPressed && mouseX >= 30 && mouseX <= 230 && mouseY >= 365 && mouseY <= 375){
     volumeToggle = mouseX
     }
+
+// code which sets the current volume depending on where the volume slider control is set
     volumeLevel = map(volumeToggle, 30, 230, 0, 1);
     sound.setVolume(volumeLevel);
     
-    
-        
+           
 // if statements to load the song selection buttons depending on which artist page is loaded.  The previously created songButton function is used.
 // The if statements are also used to load artist specific elements for each artist page such as text displaying the name of the artist, the title of the currently loaded song as well as licensing information.
     if(page == "Bensound") {
@@ -193,15 +213,16 @@ function artist_page(){
         songButton(270, "Ofelia's Dream");
         textAlign(CENTER);
         text("Music: http://www.bensound.com/royalty-free-music", 640, height-30);
+        textSize(30);
         
         if(sound == dubstepMusic) {
             text("Dubstep", 130, 140);
         }
         else if (sound == beginningMusic) {
-            text("A New Beginning");
+            text("A New Beginning", 130, 140);
         }
         else if (sound == ofeliasdreamMusic) {
-            text("Ofelia's Dream");
+            text("Ofelia's Dream", 130, 140);
         }
 
         textSize(90);
@@ -215,19 +236,19 @@ function artist_page(){
         songButton(270, "Corridor");
         textAlign(CENTER);
         text("Music: http://www.purple-planet.com", 640, height-30);
-                
+        textSize(30);
+        
         if(sound == danceofdeathMusic) {
-            text("Dubstep", 130, 140);
+            text("Dance of Death", 130, 140);
         }
         else if (sound == darknessMusic) {
-            text("A New Beginning");
+            text("Darkness", 130, 140);
         }
         else if (sound == corridorMusic) {
-            text("Ofelia's Dream");
+            text("Corridor", 130, 140);
         }
         
         textSize(90);
-        fill("#733EBB")
         text("Purple Planet", 640, 120);
     }
  
@@ -240,15 +261,15 @@ function artist_page(){
         text("Kevin MacLeod (incompetech.com)", 640, height-60);
         text("Licensed under Creative Commons: By Attribution 3.0", 640, height-40);
         text("http://creativecommons.org/licenses/by/3.0/", 640, height-20);
-                
-        if(sound == dubstepMusic) {
-            text("Dubstep", 130, 140);
+        textSize(30);
+        if(sound == moorlandMusic) {
+            text("Moorland", 130, 140);
         }
-        else if (sound == beginningMusic) {
-            text("A New Beginning");
+        else if (sound == heavyheartMusic) {
+            text("Heavy Heart", 130, 140);
         }
-        else if (sound == ofeliasdreamMusic) {
-            text("Ofelia's Dream");
+        else if (sound == angevinMusic) {
+            text("Angevin", 130, 140);
         }
         
         textSize(90);
@@ -367,8 +388,9 @@ function mouseClicked() {
     }
 }
 
-// draw function 
+// draw function which loops while the application runs
 function draw() {
+    
 // if statement which determines which page is currently loaded in the application useing the page variable
   if(page == "home") {
       home();
