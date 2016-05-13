@@ -10,10 +10,16 @@ var art;
 // variable for the application to keep track of if the current loaded music is being played or not
 var playback;
 
+<<<<<<< HEAD
 // variable which will store the amplitude value of the music currently playing
 var soundAmp;
 
 //variable 
+=======
+
+var testa
+
+>>>>>>> origin/master
 var volumeLevel;
 
 var volumeToggle = 130;
@@ -84,6 +90,7 @@ function setup() {
 
 // setup the application's window size
     createCanvas(1280,720);
+<<<<<<< HEAD
     
 
     analyzer = new p5.Amplitude();
@@ -99,6 +106,24 @@ function visualiser(){
     ellipse(675, 375, testa*200, testa*200);
     ellipse(675, 375, testa*400, testa*400);
     //ellipse(675, 375, testa*800, testa*800);
+=======
+    analyzer = new p5.Amplitude();
+    analyzer.setInput(sound);
+    fft = new p5.FFT();
+    fft.setInput(sound);
+}
+
+
+function visualiser(){
+    
+    
+    testa = analyzer.getLevel();
+    testb = fft.analyze();
+    fill(testa*255, 0, testa*255)
+    //ellipse(500,500,testb.length,50);
+    fill(255, 255-(testa*255), 255)
+    rect(280, 150, 790, 450, 80);
+>>>>>>> origin/master
 }
 
 
@@ -107,6 +132,13 @@ function home(){
     
 // background colour of the home page
      background('#44A3C1');
+     fill(245);
+     textSize(90);
+     textAlign(CENTER);
+     textFont("Arial");
+     text("Select an artist:", 640, 210);
+    
+     
     
 // text advising user to select an artist
      fill(245);
@@ -158,10 +190,13 @@ function artist_page(){
     fill("#51BB3E");
     triangle(80, 400, 110, 420, 80, 440);
     playback = "paused";
+<<<<<<< HEAD
     fill(245);
     textSize(20);
     textAlign(CENTER);
     text("Select a song from the right hand menu and press the play button", 675, 375);
+=======
+>>>>>>> origin/master
     }
     
 // code to produce the stop button to stop music from playing 
@@ -184,15 +219,25 @@ function artist_page(){
     sound.setVolume(volumeLevel);
     
     
+<<<<<<< HEAD
         
 // if statements to load the song selection buttons depending on which artist page is loaded.  The previously created songButton function is used.
 // The if statements are also used to load artist specific elements for each artist page such as text displaying the name of the artist, the title of the currently loaded song as well as licensing information.
+=======
+    
+    
+    
+    
+// if statements to load the song selection buttons depending on which artist page is loaded.  The previously created songButton function is used.
+// The if statements are also used to load artist specific elements for each artist page such as page title text and licensing information.
+>>>>>>> origin/master
     if(page == "Bensound") {
         songButton(150, "Dubstep");
         songButton(210, "A New Beginning");
         songButton(270, "Ofelia's Dream");
         textAlign(CENTER);
         text("Music: http://www.bensound.com/royalty-free-music", 640, height-30);
+<<<<<<< HEAD
         
         if(sound == dubstepMusic) {
             text("Dubstep", 130, 140);
@@ -204,6 +249,8 @@ function artist_page(){
             text("Ofelia's Dream");
         }
 
+=======
+>>>>>>> origin/master
         textSize(90);
         text("Bensound", 640, 120);
     }
@@ -215,6 +262,7 @@ function artist_page(){
         songButton(270, "Corridor");
         textAlign(CENTER);
         text("Music: http://www.purple-planet.com", 640, height-30);
+<<<<<<< HEAD
                 
         if(sound == danceofdeathMusic) {
             text("Dubstep", 130, 140);
@@ -226,6 +274,8 @@ function artist_page(){
             text("Ofelia's Dream");
         }
         
+=======
+>>>>>>> origin/master
         textSize(90);
         fill("#733EBB")
         text("Purple Planet", 640, 120);
@@ -240,6 +290,7 @@ function artist_page(){
         text("Kevin MacLeod (incompetech.com)", 640, height-60);
         text("Licensed under Creative Commons: By Attribution 3.0", 640, height-40);
         text("http://creativecommons.org/licenses/by/3.0/", 640, height-20);
+<<<<<<< HEAD
                 
         if(sound == dubstepMusic) {
             text("Dubstep", 130, 140);
@@ -251,6 +302,8 @@ function artist_page(){
             text("Ofelia's Dream");
         }
         
+=======
+>>>>>>> origin/master
         textSize(90);
         text("Incompetech", 640, 120);
     }    
@@ -308,6 +361,7 @@ function mouseClicked() {
           sound.stop();
           sound = dubstepMusic
           art = dubstepImage
+<<<<<<< HEAD
     }
     
     // button to select song "A New Beginning" on the Bensound page and load corresponding song art
@@ -317,6 +371,17 @@ function mouseClicked() {
           art = beginningImage
     }
     
+=======
+    }
+    
+    // button to select song "A New Beginning" on the Bensound page and load corresponding song art
+    else if(page == "Bensound" && mouseX >= width-160 && mouseX<= width-30 && mouseY >= 210 && mouseY <= 250) {
+          sound.stop();
+          sound = beginningMusic
+          art = beginningImage
+    }
+    
+>>>>>>> origin/master
     // button to select song "Ofelia's Dream" on the Bensound page and load corresponding song art
     else if(page == "Bensound" && mouseX >= width-160 && mouseX<= width-30 && mouseY >= 270 && mouseY <= 310) {
           sound.stop();
@@ -365,6 +430,7 @@ function mouseClicked() {
           sound = angevinMusic
           art = angevinImage
     }
+    
 }
 
 // draw function 
@@ -374,5 +440,16 @@ function draw() {
       home();
   } else {
       artist_page();
+      
+      
   } 
+<<<<<<< HEAD
 }
+=======
+  
+}
+                                       
+
+    
+ 
+>>>>>>> origin/master
