@@ -122,7 +122,7 @@ function home(){
      fill('#285F77');
      textStyle(BOLD);
      textSize(100);
-     text("Calyburd Music", 640, 110);
+     text("Caleyburd Music", 640, 110);
         
 // Art for each artist loaded on the homepage, each image will function as a button to load the page for each respective artist.
      image(bensoundImage, 130, 270, 390, 180);
